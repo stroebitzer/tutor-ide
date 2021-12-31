@@ -34,4 +34,7 @@ WORKDIR /home/theia
 # USER theia
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins  
+
+COPY settings.json /root/settings.json
+
 ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]

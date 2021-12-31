@@ -1,0 +1,9 @@
+{
+    "editor.minimap.enabled": false,
+    "files.exclude": {
+        "**/.git": true,
+        // TODO what if the training has a different name
+        "**/.training.yaml": true,
+        "**/.task.yaml": true
+    }
+}
