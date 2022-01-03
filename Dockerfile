@@ -1,8 +1,8 @@
 # from https://github.com/theia-ide/theia-apps/blob/master/theia-go-docker/Dockerfile
 
-FROM node:12.18.3 as theia
+FROM node:12.18.3 as build
 RUN apt-get -qq update && apt-get install -y libsecret-1-dev
-WORKDIR /home/theia
+WORKDIR /theia
 COPY package.json ./package.json
 RUN yarn --pure-lockfile && \
     NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
@@ -14,32 +14,36 @@ RUN yarn --pure-lockfile && \
     echo *.spec.* >> .yarnclean && \
     yarn autoclean --force && \
     yarn cache clean
-# install kubectl    
-RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-RUN chmod +x ./kubectl
-RUN mv ./kubectl /usr/local/bin
-
-# install docker, curl, nmap, netstat,...
-
-
+    
 FROM node:12.18.3
+
+# TODO install docker, curl, nmap, netstat,...
+
+# TODO set PS1 to less confusing
+
+# install kubectl
+# TODO in a versioned way of doing things!!!
+RUN apt-get install curl -y
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
 RUN apt-get -qq update && apt-get install -y libsecret-1-0
-COPY --from=theia /home/theia /home/theia
-WORKDIR /home/theia
+
+WORKDIR /theia
+COPY --from=build /theia /theia
+
 # RUN adduser --disabled-password --gecos '' theia && \
 #     chmod g+rw /home && \
 #     mkdir -p /home/project && \
 #     chown -R theia:theia /home/theia && \
 #     chown -R theia:theia /home/project
 # USER theia
+
+# TODO kubernetes config file in editable location, otherwise no namespace change possible
+
 ENV SHELL=/bin/bash \
-    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins  
+    THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins  
 
-# install kubectl
-# TODO move this upwards - should not crash the cache
-# TODO in a versioned way of doing things!!!
-RUN apt-get install curl -y
-RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+RUN mkdir /training    
 
-ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
+ENTRYPOINT [ "node", "/theia/src-gen/backend/main.js", "/training", "--hostname=0.0.0.0" ]

@@ -6,3 +6,5 @@ Dockerfile
 .gitignore
 Makefile
 README.md
+installed_plugins.md
+excluded_plugins.md
