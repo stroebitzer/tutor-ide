@@ -3,3 +3,5 @@ lib
 plugins
 src-gen
 workspace
+yarn-error.log
+yarn.lock
