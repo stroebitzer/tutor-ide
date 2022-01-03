@@ -44,6 +44,4 @@ COPY --from=build /theia /theia
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins  
 
-RUN mkdir /training    
-
 ENTRYPOINT [ "node", "/theia/src-gen/backend/main.js", "/training", "--hostname=0.0.0.0" ]

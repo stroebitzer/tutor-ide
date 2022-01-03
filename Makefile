@@ -19,7 +19,7 @@ docker-build:
 	docker build -t ${IMAGE_REPOSITORY}/${APPLICATION_NAME}:${BUILD_VERSION} .
 
 .PHONY: docker-run
-docker-run: docker-build
+docker-run: 
 	docker run --security-opt seccomp=unconfined -it --rm --init --name tutor-ide -p 3000:3000 -v "/home/hubert/git/tutor-ide/workspace:/home/project:cached" ueber/tutor-ide:0.0.1
 
 .PHONY: docker-push
