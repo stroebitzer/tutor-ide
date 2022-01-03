@@ -26,3 +26,7 @@ docker-run: docker-build
 docker-push: docker-build
 	docker push ${IMAGE_REPOSITORY}/${APPLICATION_NAME}:${BUILD_VERSION}
 
+.PHONY: k8s-patch
+k8s-patch: docker-push
+	kubectl rollout restart deployment tutor
+	
