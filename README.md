@@ -1,18 +1,15 @@
-
-https://theia-ide.org/docs/composing_applications/
-
-create package json
-
-# deps
-yarn
-
 # build
+yarn
 yarn theia build
 
-# start
-yarn start /my-workspace --hostname 0.0.0.0 --port 8081
+# run
+yarn start --hostname 0.0.0.0 --port 8081
 
-# dockerize
-https://github.com/theia-ide/theia-apps/blob/master/theia-go-docker/Dockerfile
+# install yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update
+sudo apt install yarn
 
-docker run --security-opt seccomp=unconfined -it --rm --init --name tutor-ide -p 3000:3000 -v "/home/hubert/git/tutor-ide/workspace:/home/project:cached" ueber/tutor-ide:0.0.1
+yarn --version
+1.22.17
