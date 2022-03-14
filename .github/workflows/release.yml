@@ -18,7 +18,7 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: 'theia.zip'
+          filename: 'tutor-ide.zip'
           exclusions: '*.git* .dockerignore .gitignore Dockerfile Makefile'
 
       - name: Release
@@ -39,6 +39,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./theia.zip
-          asset_name: theia.zip
+          asset_path: ./tutor-ide.zip
+          asset_name: tutor-ide.zip
           asset_content_type: application/zip
