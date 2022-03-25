@@ -14,7 +14,9 @@ jobs:
       
       - uses: actions/checkout@v2
 
-      - uses: bahmutov/npm-install@v1
+      - run: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+      - run: sudo apt-get install -y nodejs
 
       - run: make build
 
