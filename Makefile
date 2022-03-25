@@ -2,13 +2,19 @@ IMAGE_REPOSITORY = ueber
 APPLICATION_NAME = tutor-ide
 BUILD_VERSION = 0.0.1
 
-.PHONY: dependencies
-dependencies: 
-	yarn
 
 .PHONY: build
-build: dependencies 
-	yarn theia build
+build: 
+	yarn --pure-lockfile && \
+    NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
+    yarn theia download:plugins && \
+    yarn --production && \
+    yarn autoclean --init && \
+    echo *.ts >> .yarnclean && \
+    echo *.ts.map >> .yarnclean && \
+    echo *.spec.* >> .yarnclean && \
+    yarn autoclean --force && \
+    yarn cache clean
 
 .PHONY: run
 run: build
@@ -30,3 +36,28 @@ docker-push: docker-build
 k8s-patch: docker-push
 	kubectl rollout restart deployment tutor
 	
+
+# .PHONY: aaa-build
+# aaa-build: 
+# 	# yarn --production
+# 	# yarn theia build
+# 	yarn --pure-lockfile && \
+#     NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
+#     yarn theia download:plugins && \
+#     yarn --production && \
+#     yarn autoclean --init && \
+#     echo *.ts >> .yarnclean && \
+#     echo *.ts.map >> .yarnclean && \
+#     echo *.spec.* >> .yarnclean && \
+#     yarn autoclean --force && \
+#     yarn cache clean
+
+# .PHONY: aaa-deploy
+# aaa-deploy: 
+# 	zip -r theia.zip .
+# 	unzip ./theia.zip -d ./fucking_fuck_fuck_nodejs
+
+# .PHONY: aaa-run
+# aaa-run: 
+# 	cd ./fucking_fuck_fuck_nodejs
+# 	node ./src-gen/backend/main.js /home/hubert/Desktop/fucking_theia --hostname 0.0.0.0 --port 8081
