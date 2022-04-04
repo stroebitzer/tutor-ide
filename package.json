@@ -74,5 +74,12 @@
         "vscode.vb",
         "vscode.vscode-theme-seti",
         "vscode.xml"
-    ]
+    ],
+    "theia": {
+        "frontend": {
+            "config": {
+                "defaultTheme": "light"
+            }
+        }
+    }
 }

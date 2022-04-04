@@ -5,6 +5,5 @@
         "**/.task.yaml": true,
         "**/.task.md": true,
         ".theia": true
-    },
-    "workbench.colorTheme": "Default Light+"
+    }
 }
