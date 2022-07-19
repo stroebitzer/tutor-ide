@@ -9,3 +9,5 @@ yarn.lock
 webpack.config.js
 yarn.lock
 gen-webpack.config.js
+
+.vscode
