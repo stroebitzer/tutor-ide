@@ -5,5 +5,6 @@
         "**/.task.yaml": true,
         "**/.task.md": true,
         ".theia": true
-    }
+    },
+    "terminal.integrated.shell.linux": "/bin/bash"
 }
