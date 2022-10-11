@@ -4,6 +4,9 @@
         "**/.training.yaml": true,
         "**/.task.yaml": true,
         "**/.task.md": true,
+        "**/.setup": true,
+        "**/.teardown": true,
+        "**/.solution": true,
         ".theia": true
     },
     "terminal.integrated.shell.linux": "/bin/bash"

@@ -16,8 +16,10 @@ build:
     yarn cache clean
 
 .PHONY: run
-run: build
-	yarn start --hostname 0.0.0.0 --port 8081
+run: 
+	yarn
+	yarn theia build
+	yarn start /home/hubert/Desktop/theia-workspace --hostname 0.0.0.0 --port 8081
 
 .PHONY: docker-build
 docker-build: 
